@@ -1,0 +1,14 @@
+$ docker build -t spark-2:latest .
+$ docker-compose up
+$ docker-compose -H <docker machine IP>:2376 scale spark-worker-1=<n>
+
+# Map port 8881 in spark-worker-1 definition in docker-compose.yml if you don't need to scale workers
+#    expose:
+#      - 7012
+#      - 7013
+#      - 7014
+#      - 7015
+#      - 7016
+#      - 8881
+#    ports:
+#      - 8881:8881
