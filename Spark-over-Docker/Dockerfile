@@ -1,8 +1,7 @@
 FROM ubuntu:16.10
 
 RUN apt-get -y update
-RUN apt-get -y install wget
-RUN apt-get -y install python
+RUN apt-get -y install wget python
 
 # JAVA
 ARG JAVA_ARCHIVE=http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jre-8u112-linux-x64.tar.gz
