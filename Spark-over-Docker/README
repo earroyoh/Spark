@@ -7,17 +7,6 @@ $ docker-compose -H <docker machine IP>:2376 scale spark-worker-1=<n>
 # Docker stack
 $ docker stack deploy -c docker-stack.yml SPARK
 
-# Map port 8881 in spark-worker-1 definition in docker-compose.yml if you don't need to scale workers
-#    expose:
-#      - 7012
-#      - 7013
-#      - 7014
-#      - 7015
-#      - 7016
-#      - 8881
-#    ports:
-#      - 8881:8881
-
 $ docker exec -it spark-master /bin/bash
 root@<container id>:/usr/local/spark-2.1.0-bin-hadoop2.7# ls examples/src/main/java/org/apache/spark/examples/mllib/Java*
 root@<container id>:/usr/local/spark-2.1.0-bin-hadoop2.7# bin/run-example mllib.JavaKMeansExample
