@@ -20,6 +20,7 @@ ENV PATH $PATH:${SPARK_HOME}/bin
 RUN wget -q ${SPARK_ARCHIVE}
 RUN tar -xzf `basename ${SPARK_ARCHIVE}` -C /usr/local/
 RUN rm -f `basename ${SPARK_ARCHIVE}`
+RUN mkdir -p /tmp/spark-events
 
 WORKDIR $SPARK_HOME
 
