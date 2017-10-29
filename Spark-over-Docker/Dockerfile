@@ -4,7 +4,7 @@ RUN apt -y update
 RUN apt-get -y install curl python
 
 # JAVA
-apt-get -y install openjdk-9-jre
+RUN apt-get -y install openjdk-9-jre
 ENV JAVA_HOME /usr/lib/jvm/java-9-openjdk-amd64
 ENV PATH $PATH:${JAVA_HOME}/bin
 
