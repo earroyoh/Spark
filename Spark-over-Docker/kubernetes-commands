@@ -1,0 +1,37 @@
+# https://kubernetes.io/docs/setup/independent/install-kubeadm/
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+setenforce 0
+yum install -y kubelet kubeadm kubectl
+systemctl enable kubelet && systemctl start kubelet
+
+swapoff -a
+kubeadm init
+kubectl taint nodes --all node-role.kubernetes.io/master-
+kubectl apply -f https://docs.projectcalico.org/v2.6/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml
+
+# kubernetes on IBM bluemix
+#bx cs cluster-service-bind SPARK default spark-master
+#kubectl run myspark --image=registry.eu-de.bluemix.net/earroyohns/spark-2
+#kubectl label nodes 10.126.121.144 node=kubeworker
+#kubectl create clusterrolebinding cluster-admin --clusterrole=cluster-admin --user=system:anonymous
+
+kubectl get nodes
+kubectl get pods --all-namespaces
+
+kompose convert -c docker-compose.yml
+
+kubectl create -f spark-master-pod.yaml
+kubectl expose pod spark-master --port=7077,6066 --name=spark-master
+kubectl create -f spark-worker-1-pod.yaml
+kubectl expose pod spark-worker-1 --port=8881 --type=NodePort --name=spark-worker-1
+kubectl expose pod spark-master --port=8080,4040,6066,18080,8888 --external-ip=<ip> --type=LoadBalancer --name=spark-master-ui
+kubectl run zeppelin --image=apache/zeppelin:0.7.3 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-2.2.1-bin-hadoop2.7"
+kubectl expose deployment zeppelin --port=8081 --external-ip=<ip> --name=zeppelin
