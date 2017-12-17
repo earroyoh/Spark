@@ -9,9 +9,10 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH $PATH:${JAVA_HOME}/bin
 
 # SPARK
-ARG SPARK_ARCHIVE=http://d3kbcqa49mib13.cloudfront.net/spark-2.2.0-bin-hadoop2.7.tgz
-#ARG SPARK_ARCHIVE=https://www.apache.org/dyn/closer.lua/spark/spark-2.2.0/spark-2.2.0-bin-hadoop2.7.tgz
-ENV SPARK_HOME /usr/local/spark-2.2.0-bin-hadoop2.7
+ARG SPARK_ARCHIVE=http://apache.rediris.es/spark/spark-2.2.1/spark-2.2.1-bin-hadoop2.7.tgz
+#ARG SPARK_ARCHIVE=https://www.apache.org/dyn/closer.lua/spark/spark-2.2.1/spark-2.2.1-bin-hadoop2.7.tgz
+#ARG SPARK_ARCHIVE=http://d3kbcqa49mib13.cloudfront.net/spark-2.2.1-bin-hadoop2.7.tgz
+ENV SPARK_HOME /usr/local/spark-2.2.1-bin-hadoop2.7
 
 ENV PATH $PATH:${SPARK_HOME}/bin
 RUN curl -L0 ${SPARK_ARCHIVE} | tar xz -C /usr/local/
@@ -19,5 +20,11 @@ RUN curl -L0 ${SPARK_ARCHIVE} | tar xz -C /usr/local/
 WORKDIR $SPARK_HOME
 
 # PIP and python packages
-RUN curl -L0 https://bootstrap.pypa.io/get-pip.py | python
-RUN pip install numpy pandas
+#RUN curl -L0 https://bootstrap.pypa.io/get-pip.py | python
+#RUN pip install numpy pandas
+RUN apt-get -y install python-pip python-pip-whl
+RUN pip install --upgrade pip && pip install jupyter
+
+ENV PYSPARK_DRIVER_PYTHON=jupyter
+ENV PYSPARK_DRIVER_PYTHON_OPTS="notebook --allow-root --ip=0.0.0.0"
+EXPOSE 8080 4040 6066 18080 8888
