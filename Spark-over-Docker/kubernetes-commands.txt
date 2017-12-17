@@ -26,10 +26,11 @@ kubectl apply -f https://docs.projectcalico.org/v2.6/getting-started/kubernetes/
 kubectl get nodes
 kubectl get pods --all-namespaces
 
+yum install -y kompose
 kompose convert -c docker-compose.yml
 
 kubectl create -f spark-master-pod.yaml
-kubectl expose pod spark-master --port=7077,6066 --name=spark-master
+kubectl expose pod spark-master --port=7077,6066 --type=NodePort --name=spark-master
 kubectl create -f spark-worker-1-pod.yaml
 kubectl expose pod spark-worker-1 --port=8881 --type=NodePort --name=spark-worker-1
 kubectl expose pod spark-master --port=8080,4040,6066,18080,8888 --external-ip=<ip> --type=LoadBalancer --name=spark-master-ui
