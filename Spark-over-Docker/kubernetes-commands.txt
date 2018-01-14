@@ -14,6 +14,7 @@ systemctl enable kubelet && systemctl start kubelet
 
 swapoff -a
 kubeadm init
+export KUBECONFIG=/etc/kubernetes/admin.conf
 kubectl taint nodes --all node-role.kubernetes.io/master-
 kubectl apply -f https://docs.projectcalico.org/v2.6/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml
 
