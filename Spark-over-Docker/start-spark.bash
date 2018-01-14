@@ -15,7 +15,7 @@ do
 done
 kubectl expose pod spark-master --port=7077,6066 --name=spark-master -n spark
 #kubectl expose pod spark-master \
-#  --port=8080,4040,6066,18080,8888,10000 \
+#  --port=8080,8081,4040,4041,6066,18080,8888,10000 \
 #  --external-ip=`ifconfig -a | awk -v iface=$IFACE '/$iface/ {getline;print $2}'` \
 #  --type=LoadBalancer \
 #  --name=spark-master-ui \
