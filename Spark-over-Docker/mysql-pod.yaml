@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql
+  name: mysql
+  namespace: spark
+spec:
+  containers:
+  - args:
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: xxxxxxxxx
+    ports:
+    - containerPort: 3306
+    image: mysql:latest
+    name: mysql
+    resources: {}
+  restartPolicy: OnFailure
+status: {}
