@@ -23,8 +23,8 @@ kubectl expose pod spark-master --port=7077,6066 --name=spark-master -n spark
 kubectl expose pod spark-master --port=8080,8081,4040,4041,6066,18080,8888,10000 --external-ip=192.168.0.167 --type=LoadBalancer --name=spark-master-ui -n spark
 kubectl expose pod spark-worker-1 --port=8881 --type=LoadBalancer --name=spark-worker-1 -n spark
 kubectl expose pod mysql --port=3306 --type=LoadBalancer --name=mysql -n spark
-kubectl exec spark-master -n spark -it mkdir -p /tmp/spark-events\
-kubectl exec spark-master -n spark -it $SPARK_HOME/sbin/start-thriftserver.sh
+#kubectl exec spark-master -n spark -it mkdir -p /tmp/spark-events\
+#kubectl exec spark-master -n spark -it $SPARK_HOME/sbin/start-thriftserver.sh
 
 kubectl get all -o wide -n spark
 #kubectl exec spark-worker-1 -n spark -it "echo $SPARK_MASTER_IP spark-master \>\> /etc/hosts"
