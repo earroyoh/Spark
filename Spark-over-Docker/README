@@ -1,4 +1,4 @@
-$ docker build -t spark-2:2.2 .
+$ docker build -t spark-2:2.2.1 .
 
 # Docker Compose
 $ docker-compose up -d
