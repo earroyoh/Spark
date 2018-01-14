@@ -1,7 +1,7 @@
 FROM ubuntu:16.10
 
 RUN apt -y update
-RUN apt-get -y install curl python
+RUN apt-get -y install curl
 
 # JAVA
 RUN apt-get -y install openjdk-8-jre
@@ -16,6 +16,7 @@ ENV SPARK_HOME /usr/local/spark-2.2.1-bin-hadoop2.7
 
 ENV PATH $PATH:${SPARK_HOME}/bin
 RUN curl -L0 ${SPARK_ARCHIVE} | tar xz -C /usr/local/
+RUN mkdir -p /tmp/spark-events
 
 WORKDIR $SPARK_HOME
 
@@ -24,6 +25,10 @@ WORKDIR $SPARK_HOME
 #RUN pip install numpy pandas
 RUN apt-get -y install python-pip python-pip-whl
 RUN pip install --upgrade pip && pip install jupyter
+
+# MySQL and PostgreSQL drivers
+RUN curl -L0 https://repo1.maven.org/maven2/mysql/mysql-connector-java/6.0.6/mysql-connector-java-6.0.6.jar > ${SPARK_HOME}/jars/mysql-connector-java-6.0.6.jar
+RUN curl -L0 https://repo1.maven.org/maven2/postgresql/postgresql/9.1-901.jdbc4/postgresql-9.1-901.jdbc4.jar > ${SPARK_HOME}/jars/postgresql-9.1-901.jdbc4.jar
 
 ENV PYSPARK_DRIVER_PYTHON=jupyter
 ENV PYSPARK_DRIVER_PYTHON_OPTS="notebook --allow-root --ip=0.0.0.0"
