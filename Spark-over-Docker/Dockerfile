@@ -1,4 +1,4 @@
-FROM ubuntu:16.10
+FROM ubuntu:latest
 
 RUN apt -y update
 RUN apt-get -y install curl
@@ -24,7 +24,7 @@ WORKDIR $SPARK_HOME
 #RUN curl -L0 https://bootstrap.pypa.io/get-pip.py | python
 #RUN pip install numpy pandas
 RUN apt-get -y install python-pip python-pip-whl
-RUN pip install --upgrade pip && pip install jupyter
+RUN pip install --upgrade pip && pip install jupyter matplotlib seaborn xgboost
 
 # MySQL and PostgreSQL drivers
 RUN curl -L0 https://repo1.maven.org/maven2/mysql/mysql-connector-java/6.0.6/mysql-connector-java-6.0.6.jar > ${SPARK_HOME}/jars/mysql-connector-java-6.0.6.jar
