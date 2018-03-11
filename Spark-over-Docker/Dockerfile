@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt -y update
+#RUN apt -y update
 RUN apt-get -y install curl
 
 # JAVA
