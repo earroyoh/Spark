@@ -25,7 +25,7 @@ spec:
       value: "8081"
     - name: SPARK_PUBLIC_DNS
       value: "spark.svc.cluster.local"
-    image: spark-2:2.2.1
+    image: spark-2:2.3.1
     name: spark-worker-1
     resources: {}
   restartPolicy: OnFailure
