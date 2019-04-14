@@ -3,13 +3,13 @@
 #IFACE=enp0s3
 
 kubectl create namespace spark
-kubectl apply -f spark-master-deployment.yaml
+kubectl apply -f spark-master-deployment.yaml -n spark
 kubectl apply -f spark-master-claim0-persistentvolumeclaim.yaml -n spark
 kubectl apply -f spark-master-claim1-persistentvolumeclaim.yaml -n spark
-kubectl apply -f spark-worker-1-deployment.yaml
+kubectl apply -f spark-worker-1-deployment.yaml -n spark
 kubectl apply -f spark-worker-1-claim0-persistentvolumeclaim.yaml -n spark
 kubectl apply -f spark-worker-1-claim1-persistentvolumeclaim.yaml -n spark
-kubectl apply -f mysql-pod.yaml
+kubectl apply -f mysql-pod.yaml -n spark
 
 SPARK_MASTER_IP="<none>"
 echo "Waiting for IP address..."
