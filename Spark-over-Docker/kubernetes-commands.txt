@@ -35,5 +35,5 @@ kubectl expose pod spark-master --port=7077,6066 --type=NodePort --name=spark-ma
 kubectl create -f spark-worker-1-pod.yaml
 kubectl expose pod spark-worker-1 --port=8881 --type=NodePort --name=spark-worker-1
 kubectl expose pod spark-master --port=8080,4040,6066,18080,8888 --external-ip=<ip> --type=LoadBalancer --name=spark-master-ui
-kubectl run zeppelin --image=apache/zeppelin:0.8.0 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-2.3.1-bin-hadoop2.7"
+kubectl run zeppelin --image=apache/zeppelin:0.8.0 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-2.4.3-bin-hadoop2.7"
 kubectl expose deployment zeppelin --port=8081 --external-ip=<ip> --name=zeppelin
