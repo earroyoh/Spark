@@ -1,7 +1,7 @@
     
 node {
-    def project = earroyoh
-    def appName = spark-2
+    def project = 'earroyoh'
+    def appName = 'spark-2'
     def imageTag = "docker.io/${project}/${appName}:${env.BUILD_NUMBER}"
     
     checkout scm
