@@ -10,5 +10,5 @@ node {
     sh("docker build -t ${imageTag} .")
 
     stage 'Push image to regitry'
-    sh("docker push ${imageTag}"
+    sh("docker push ${imageTag}")
 }
