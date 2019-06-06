@@ -1,5 +1,5 @@
     
-pipeline {
+node {
     def project = 'earroyoh'
     def appName = 'spark-2'
     def imageTag = "${appName}:${env.BUILD_NUMBER}"
@@ -9,10 +9,14 @@ pipeline {
     
     stages {
         stage('Build image') {
-            sh("docker build -t ${imageTag} .")
+            steps {
+                sh("docker build -t ${imageTag} .")
+            }
         }
         stage('Push image to regitry') {
-            sh("docker push docker.io/${project}/${imageTag}")
+            steps {
+                sh("docker push docker.io/${project}/${imageTag}")
+            }
         }
     }
 }
