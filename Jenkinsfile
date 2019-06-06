@@ -8,9 +8,9 @@ node {
     checkout scm
     
     stage('Build image') {
-        sh("chmod 755 usr/bin/docker;/bin/sh -c /usr/bin/docker build -t ${imageTag} ./Spark-over-Docker")
+        sh("chmod 755 /usr/bin/docker;/usr/bin/docker build -t ${imageTag} ./Spark-over-Docker")
     }
     stage('Push image to regitry') {
-        sh("/bin/sh -c /usr/bin/docker push docker.io/${project}/${imageTag}")
+        sh("/usr/bin/docker push docker.io/${project}/${imageTag}")
     }
 }
