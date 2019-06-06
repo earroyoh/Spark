@@ -8,7 +8,7 @@ node {
     checkout scm
     
     stage('Build image') {
-        sh("chmod 755 docker")
+        sh("chmod 755 /usr/bin/docker")
         sh("docker build -t ${imageTag} .")
     }
     stage('Push image to regitry') {
