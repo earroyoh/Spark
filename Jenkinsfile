@@ -8,13 +8,9 @@ node {
     checkout scm
     
     stage('Build image') {
-        steps {
-            sh("docker build -t ${imageTag} .")
-        }
+        sh("docker build -t ${imageTag} .")
     }
     stage('Push image to regitry') {
-        steps {
-           sh("docker push docker.io/${project}/${imageTag}")
-        }
+        sh("docker push docker.io/${project}/${imageTag}")
     }
 }
