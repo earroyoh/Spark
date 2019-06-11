@@ -1,6 +1,4 @@
-version: '2'
-services:
-  spark-master:
+spark-master:
     image: spark-2:2.4.3
     command: bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
     hostname: spark-master
@@ -31,7 +29,7 @@ services:
       - ./conf/spark-master:/conf
       - ./data:/data  
 
-  spark-worker-1:
+spark-worker-1:
     image: spark-2:2.4.3
     command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     hostname: spark-worker-1
@@ -56,9 +54,3 @@ services:
     volumes:
       - ./conf/spark-worker-1:/conf
       - ./data:/data
-
-volumes:
-      conf:
-#        driver: overlay2
-      data:
-#        driver: overlay2
