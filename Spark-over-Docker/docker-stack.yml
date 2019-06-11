@@ -34,7 +34,7 @@ services:
       - "8080:8080"
     volumes:
       - ./conf/spark-master:/conf
-      - ./data:/tmp/data  
+      - ./data:/data  
 
   spark-worker-1:
     image: spark-2:2.4.3
@@ -68,7 +68,7 @@ services:
       - "8881"
     volumes:
       - ./conf/spark-worker-1:/conf
-      - ./data:/tmp/data
+      - ./data:/data
 
 networks:
   docknet:
