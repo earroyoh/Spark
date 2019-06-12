@@ -37,5 +37,5 @@ kubectl expose pod mysql --port=3306 --type=LoadBalancer --name=mysql -n spark
 
 kubectl get all -o wide -n spark
 #kubectl exec spark-worker-1 -n spark -it "echo $SPARK_MASTER_IP spark-master \>\> /etc/hosts"
-kubectl run zeppelin --image=apache/zeppelin:0.8.0 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-2.3.1-bin-hadoop2.7" -n spark
+kubectl run --generator=run-pod/v1 zeppelin --image=apache/zeppelin:0.8.0 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-2.4.3-bin-hadoop2.7" -n spark
 kubectl expose deployment zeppelin --port=8081 --target-port=8080 --external-ip=192.168.0.167 --name=zeppelin -n spark
