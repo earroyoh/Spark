@@ -2,11 +2,11 @@
 
 #IFACE=enp0s3
 
-curl -L https://github.com/kubernetes/kompose/releases/download/v1.17.0/kompose-linux-amd64 -o kompose
+#curl -L https://github.com/kubernetes/kompose/releases/download/v1.17.0/kompose-linux-amd64 -o kompose
 chmod +x kompose
 sudo mv kompose /usr/local/bin
 
-kompose convert -f docker-compose.yml
+kompose convert -f docker-compose.yaml
 kubectl create namespace spark
 kubectl apply -f spark-master-deployment.yaml -n spark
 kubectl apply -f spark-master-claim0-persistentvolumeclaim.yaml -n spark
