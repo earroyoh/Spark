@@ -29,7 +29,7 @@ services:
       - "20888:20888"
     volumes:
       - ./conf/spark-master:/conf
-      - data:/data  
+      - ./data:/data  
     networks:
       - backend
 
@@ -57,7 +57,7 @@ services:
       - "8081:8081"
     volumes:
       - ./conf/spark-worker-1:/conf
-      - data:/data
+      - ./data:/data
     networks:
       - backend
 volumes:

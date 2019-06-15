@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: conf-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: conf-pv-volume
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "./conf"

@@ -23,10 +23,14 @@ WORKDIR $SPARK_HOME
 # PIP and python packages
 #RUN curl -L0 https://bootstrap.pypa.io/get-pip.py | python
 #RUN pip install numpy pandas
+ENV TERM xterm 
+ENV TZ Europe/Madrid
 RUN apt-get -y install python-pip python-pip-whl
-#RUN pip install --upgrade pip && pip install jupyter matplotlib seaborn xgboost
-RUN pip install jupyter matplotlib seaborn xgboost scikit-learn
-RUN apt-get -y install r-base
+RUN pip install --upgrade pip && pip install jupyter matplotlib seaborn xgboost scikit-learn
+# Comment out if you use tensorflow=2.0.0alpha
+#RUN pip install --pre -U tensorflow
+# Comment out if you use R-studio and parkR
+#RUN apt-get -y install r-base
 
 # MySQL and PostgreSQL drivers
 RUN curl -L0 https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.12/mysql-connector-java-8.0.12.jar > ${SPARK_HOME}/jars/mysql-connector-java-8.0.12.jar
