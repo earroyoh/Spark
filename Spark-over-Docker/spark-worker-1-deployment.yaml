@@ -9,7 +9,7 @@ metadata:
     io.kompose.service: spark-worker-1
   name: spark-worker-1
 spec:
-  replicas: 1
+  replicas: 2
   strategy:
     type: Recreate
   template:
