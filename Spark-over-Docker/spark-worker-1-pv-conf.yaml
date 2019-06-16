@@ -11,4 +11,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "conf/spark-worker-1"
+    path: "/mnt/conf/spark-worker-1"
