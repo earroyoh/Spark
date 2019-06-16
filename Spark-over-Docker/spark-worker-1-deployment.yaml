@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.17.0 (a74acad)
+    kompose.version: 1.18.0 (06a2e56)
   creationTimestamp: null
   labels:
     io.kompose.service: spark-worker-1
@@ -29,9 +29,9 @@ spec:
         - name: SPARK_PUBLIC_DNS
           value: 127.0.0.1
         - name: SPARK_WORKER_CORES
-          value: "2"
+          value: "1"
         - name: SPARK_WORKER_MEMORY
-          value: 2g
+          value: 1g
         - name: SPARK_WORKER_PORT
           value: "8881"
         - name: SPARK_WORKER_WEBUI_PORT
@@ -55,4 +55,13 @@ spec:
       - name: spark-worker-1-claim1
         persistentVolumeClaim:
           claimName: spark-worker-1-claim1
+      tolerations:
+      - effect: NoExecute
+        key: "node.kubernetes.io"
+        operator: Equal
+        value: "not-ready"
+      - effect: NoSchedule
+        key: "node-role.kubernetes.io"
+        operator: Equal
+        value: "master"
 status: {}

@@ -6,9 +6,10 @@ metadata:
     io.kompose.service: spark-master-claim0
   name: spark-master-claim0
 spec:
+  storageClassName: spark-master-conf-pv-class
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
+      storage: 1Mi
 status: {}

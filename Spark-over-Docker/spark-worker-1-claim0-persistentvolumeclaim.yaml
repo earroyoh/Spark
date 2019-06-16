@@ -6,9 +6,10 @@ metadata:
     io.kompose.service: spark-worker-1-claim0
   name: spark-worker-1-claim0
 spec:
+  storageClassName: spark-worker-1-conf-pv-class
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
+      storage: 1Mi
 status: {}

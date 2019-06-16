@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.17.0 (a74acad)
+    kompose.version: 1.18.0 (06a2e56)
   creationTimestamp: null
   labels:
     io.kompose.service: spark-master
@@ -56,4 +56,13 @@ spec:
       - name: spark-master-claim1
         persistentVolumeClaim:
           claimName: spark-master-claim1
+      tolerations:
+      - effect: NoExecute
+        key: "node.kubernetes.io"
+        operator: Equal
+        value: "not-ready"
+      - effect: NoSchedule
+        key: "node-role.kubernetes.io"
+        operator: Equal
+        value: "master"
 status: {}

@@ -26,10 +26,11 @@ WORKDIR $SPARK_HOME
 ENV TERM xterm 
 ENV TZ Europe/Madrid
 RUN apt-get -y install python-pip python-pip-whl
-RUN pip install --upgrade pip && pip install jupyter matplotlib seaborn xgboost scikit-learn
+#RUN pip install --upgrade pip && pip install jupyter matplotlib seaborn xgboost scikit-learn
+RUN pip install jupyter matplotlib seaborn xgboost scikit-learn
 # Comment out if you use tensorflow=2.0.0alpha
 #RUN pip install --pre -U tensorflow
-# Comment out if you use R-studio and parkR
+# Comment out if you use Rstudio and SparkR
 #RUN apt-get -y install r-base
 
 # MySQL and PostgreSQL drivers

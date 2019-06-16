@@ -1,21 +1,28 @@
 #!/bin/bash
 
 #IFACE=enp0s3
+GIT_SPARK=Spark/Spark-over-Docker
 
 #curl -L https://github.com/kubernetes/kompose/releases/download/v1.18.0/kompose-linux-amd64 -o kompose
 #chmod +x kompose
 #sudo mv kompose /usr/local/bin
 
-kompose convert -f docker-compose.yml
+#Run the first time to generate iniital yaml files
+#kompose convert -f docker-compose.yml
+
 kubectl create namespace spark
-kubectl apply -f spark-master-claim0-persistentvolumeclaim.yaml -n spark
-kubectl apply -f spark-master-claim1-persistentvolumeclaim.yaml -n spark
-kubectl apply -f spark-master-deployment.yaml -n spark
-kubectl apply -f spark-worker-1-claim0-persistentvolumeclaim.yaml -n spark
-kubectl apply -f spark-worker-1-claim1-persistentvolumeclaim.yaml -n spark
-kubectl apply -f spark-worker-1-deployment.yaml -n spark
 kubectl apply -f mysql-pod.yaml -n spark
 kubectl expose pod mysql --port=3306 --type=LoadBalancer --name=mysql -n spark
+kubectl apply -f spark-master-pv-conf.yaml
+kubectl apply -f spark-master-pv-data.yaml
+kubectl apply -f spark-worker-1-pv-conf.yaml
+kubectl apply -f spark-worker-1-pv-data.yaml
+kubectl apply -f spark-master-claim0-persistentvolumeclaim.yaml -n spark
+kubectl apply -f spark-master-claim1-persistentvolumeclaim.yaml -n spark
+kubectl apply -f spark-worker-1-claim0-persistentvolumeclaim.yaml -n spark
+kubectl apply -f spark-worker-1-claim1-persistentvolumeclaim.yaml -n spark
+kubectl apply -f spark-master-deployment.yaml -n spark
+kubectl apply -f spark-worker-1-deployment.yaml -n spark
 
 SPARK_MASTER_IP="<none>"
 echo "Waiting for IP address..."

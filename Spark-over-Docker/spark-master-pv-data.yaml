@@ -1,14 +1,14 @@
-kind: PersistentVolume
 apiVersion: v1
+kind: PersistentVolume
 metadata:
-  name: data-pv-volume
+  name: spark-master-data-pv-volume
   labels:
     type: local
 spec:
-  storageClassName: data-pv-volume
+  storageClassName: spark-master-data-pv-class
   capacity:
     storage: 1Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "./data"
+    path: "data"

@@ -1,14 +1,14 @@
-kind: PersistentVolume
 apiVersion: v1
+kind: PersistentVolume
 metadata:
-  name: conf-pv-volume
+  name: spark-worker-1-data-pv-volume
   labels:
     type: local
 spec:
-  storageClassName: conf-pv-volume
+  storageClassName: spark-worker-1-data-pv-class
   capacity:
     storage: 1Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "./conf"
+    path: "data"
