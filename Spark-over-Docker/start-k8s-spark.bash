@@ -10,6 +10,10 @@ GIT_SPARK=Spark/Spark-over-Docker
 #Run the first time to generate iniital yaml files
 #kompose convert -f docker-compose.yml
 
+# Absolute paths for PVCs
+sudo ln -s $PWD/conf /mnt/conf
+sudo ln -s $PWD/data /mnt/data
+
 kubectl create namespace spark
 kubectl apply -f mysql-pod.yaml -n spark
 kubectl expose pod mysql --port=3306 --type=LoadBalancer --name=mysql -n spark
