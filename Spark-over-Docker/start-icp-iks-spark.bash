@@ -14,7 +14,8 @@ GIT_SPARK=Spark/Spark-over-Docker
 sudo ln -s $PWD/conf /mnt/conf
 sudo ln -s $PWD/data /mnt/data
 
-export KUBECONFIG=$HOME/.kube/admin.conf
+ibmcloud cr login
+export KUBECONFIG=$HOME/.bluemix/plugins/container-service/clusters/icp-ks-dev/kube-config-mil01-icp-ks-dev.yml
 kubectl create namespace spark
 kubectl apply -f mysql-pod.yaml -n spark
 kubectl expose pod mysql --port=3306 --type=LoadBalancer --name=mysql -n spark
