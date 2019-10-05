@@ -1,4 +1,4 @@
-$ docker build -t spark-2:2.4.3 .
+$ docker build -t spark-2:2.4.4 .
 
 # Docker Compose
 $ docker-compose up -d
@@ -8,22 +8,22 @@ $ docker-compose -H <docker machine IP>:2376 scale spark-worker-1=<n>
 $ docker stack deploy -c docker-stack.yml SPARK
 
 $ docker exec -it spark-master /bin/bash
-root@<container id>:/usr/local/spark-2.4.3-bin-hadoop2.7# ls examples/src/main/java/org/apache/spark/examples/mllib/Java*
-root@<container id>:/usr/local/spark-2.4.3-bin-hadoop2.7# bin/run-example mllib.JavaKMeansExample
-root@<container id>:/usr/local/spark-2.4.3-bin-hadoop2.7# bin/run-example mllib.JavaGradientBoostingRegressionExample
+root@<container id>:/usr/local/spark-2.4.4-bin-hadoop2.7# ls examples/src/main/java/org/apache/spark/examples/mllib/Java*
+root@<container id>:/usr/local/spark-2.4.4-bin-hadoop2.7# bin/run-example mllib.JavaKMeansExample
+root@<container id>:/usr/local/spark-2.4.4-bin-hadoop2.7# bin/run-example mllib.JavaGradientBoostingRegressionExample
 
 
 $ curl -X POST http://spark-master:6066/v1/submissions/create --header "Content-Type:application/json;charset=UTF-8" --data '{
   "action" : "CreateSubmissionRequest",
-  "appArgs" : [ "/usr/local/spark-2.4.3-bin-hadoop2.7/data/mllib/kmeans_data.txt" ],
-  "appResource" : "file:/usr/local/spark-2.4.3-bin-hadoop2.7/examples/jars/spark-examples_2.11-2.4.3.jar",
-  "clientSparkVersion" : "2.4.3",
+  "appArgs" : [ "/usr/local/spark-2.4.4-bin-hadoop2.7/data/mllib/kmeans_data.txt" ],
+  "appResource" : "file:/usr/local/spark-2.4.4-bin-hadoop2.7/examples/jars/spark-examples_2.11-2.4.4.jar",
+  "clientSparkVersion" : "2.4.4",
   "environmentVariables" : {
     "SPARK_ENV_LOADED" : "1"
   },
   "mainClass" : "org.apache.spark.examples.mllib.KMeansExample",
   "sparkProperties" : {
-    "spark.jars" : "file:/usr/local/spark-2.4.3-bin-hadoop2.7/examples/jars/*",
+    "spark.jars" : "file:/usr/local/spark-2.4.4-bin-hadoop2.7/examples/jars/*",
     "spark.driver.supervise" : "false",
     "spark.app.name" : "MyJob",
     "spark.eventLog.enabled": "true",
