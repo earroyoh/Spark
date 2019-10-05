@@ -1,21 +1,34 @@
 #!/bin/bash
 
 #IFACE=enp0s3
+GIT_SPARK=Spark/Spark-over-Docker
 
 #curl -L https://github.com/kubernetes/kompose/releases/download/v1.18.0/kompose-linux-amd64 -o kompose
 #chmod +x kompose
 #sudo mv kompose /usr/local/bin
 
-kompose convert -f docker-compose.yml
+#Run the first time to generate iniital yaml files
+#kompose convert -f docker-compose.yml
+
+# Absolute paths for PVCs
+sudo ln -s $PWD/conf /mnt/conf
+sudo ln -s $PWD/data /mnt/data
+
+ibmcloud cr login
+export KUBECONFIG=$HOME/.bluemix/plugins/container-service/clusters/icp-ks-dev/kube-config-mil01-icp-ks-dev.yml
 kubectl create namespace spark
-kubectl apply -f spark-master-claim0-persistentvolumeclaim.yaml -n spark
-kubectl apply -f spark-master-claim1-persistentvolumeclaim.yaml -n spark
-kubectl apply -f spark-master-deployment.yaml -n spark
-kubectl apply -f spark-worker-1-claim0-persistentvolumeclaim.yaml -n spark
-kubectl apply -f spark-worker-1-claim1-persistentvolumeclaim.yaml -n spark
-kubectl apply -f spark-worker-1-deployment.yaml -n spark
 kubectl apply -f mysql-pod.yaml -n spark
 kubectl expose pod mysql --port=3306 --type=LoadBalancer --name=mysql -n spark
+kubectl apply -f spark-master-pv-conf.yaml
+kubectl apply -f spark-master-pv-data.yaml
+kubectl apply -f spark-worker-1-pv-conf.yaml
+kubectl apply -f spark-worker-1-pv-data.yaml
+kubectl apply -f spark-master-claim0-persistentvolumeclaim.yaml -n spark
+kubectl apply -f spark-master-claim1-persistentvolumeclaim.yaml -n spark
+kubectl apply -f spark-worker-1-claim0-persistentvolumeclaim.yaml -n spark
+kubectl apply -f spark-worker-1-claim1-persistentvolumeclaim.yaml -n spark
+kubectl apply -f spark-master-deployment.yaml -n spark
+kubectl apply -f spark-worker-1-deployment.yaml -n spark
 
 SPARK_MASTER_IP="<none>"
 echo "Waiting for IP address..."
@@ -33,8 +46,8 @@ done
 #kubectl exec spark-master -n spark -it $SPARK_HOME/sbin/start-thriftserver.sh
 #kubectl apply -f spark-master-service.yaml -n spark
 #kubectl apply -f spark-worker-1-service.yaml -n spark
-kubectl expose deployment spark-master --port=8080,8081,4040,4041,6066,18080,8888,10000 --type=LoadBalancer --name=spark-master -n spark
-kubectl expose deployment spark-worker-1 --port=8881 --type=LoadBalancer --name=spark-worker-1 -n spark
+kubectl expose deployment spark-master --port=7077,8080,8081,4040,4041,6066,18080,8888,10000 --type=LoadBalancer --name=spark-master -n spark
+kubectl expose deployment spark-worker-1 --port=8881 --type=ClusterIP --name=spark-worker-1 -n spark
 
 kubectl get all -o wide -n spark
 #kubectl exec spark-worker-1 -n spark -it "echo $SPARK_MASTER_IP spark-master \>\> /etc/hosts"

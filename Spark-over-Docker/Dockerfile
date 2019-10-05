@@ -9,10 +9,10 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH $PATH:${JAVA_HOME}/bin
 
 # SPARK
-ARG SPARK_ARCHIVE=https://apache.rediris.es/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz
-#ARG SPARK_ARCHIVE=https://www.apache.org/dyn/closer.lua/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz
-#ARG SPARK_ARCHIVE=https://d3kbcqa49mib13.cloudfront.net/spark-2.4.3-bin-hadoop2.7.tgz
-ENV SPARK_HOME /usr/local/spark-2.4.3-bin-hadoop2.7
+ARG SPARK_ARCHIVE=https://apache.rediris.es/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz
+#ARG SPARK_ARCHIVE=https://www.apache.org/dyn/closer.lua/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz
+#ARG SPARK_ARCHIVE=https://d3kbcqa49mib13.cloudfront.net/spark-2.4.4-bin-hadoop2.7.tgz
+ENV SPARK_HOME /usr/local/spark-2.4.4-bin-hadoop2.7
 
 ENV PATH $PATH:${SPARK_HOME}/bin
 RUN curl -L0 ${SPARK_ARCHIVE} | tar xz -C /usr/local/
@@ -23,9 +23,15 @@ WORKDIR $SPARK_HOME
 # PIP and python packages
 #RUN curl -L0 https://bootstrap.pypa.io/get-pip.py | python
 #RUN pip install numpy pandas
+ENV TERM xterm 
+ENV TZ Europe/Madrid
 RUN apt-get -y install python-pip python-pip-whl
-#RUN pip install --upgrade pip && pip install jupyter matplotlib seaborn xgboost
-RUN pip install jupyter matplotlib seaborn xgboost scikit-learn r-base
+#RUN pip install --upgrade pip && pip install jupyter matplotlib seaborn xgboost scikit-learn
+RUN pip install jupyter matplotlib seaborn xgboost scikit-learn
+# Comment out if you use tensorflow=2.0.0
+#RUN pip install --pre -U tensorflow
+# Comment out if you use Rstudio and SparkR
+#RUN apt-get -y install r-base
 
 # MySQL and PostgreSQL drivers
 RUN curl -L0 https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.12/mysql-connector-java-8.0.12.jar > ${SPARK_HOME}/jars/mysql-connector-java-8.0.12.jar

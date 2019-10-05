@@ -1,0 +1,10 @@
+apiVersion: skaffold/v1beta11
+kind: Config
+build:
+  artifacts:
+  - image: spark-2.4.4
+    context: Spark-over-Docker
+deploy:
+  kubectl:
+    manifests:
+    - Spark-over-Docker/*.yaml

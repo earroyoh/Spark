@@ -18,4 +18,13 @@ spec:
     name: mysql
     resources: {}
   restartPolicy: OnFailure
+  tolerations:
+    - effect: NoExecute
+      key: "node.kubernetes.io"
+      operator: Equal
+      value: "not-ready"
+    - effect: NoSchedule
+      key: "node-role.kubernetes.io"
+      operator: Equal
+      value: "master"
 status: {}
