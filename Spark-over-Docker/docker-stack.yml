@@ -18,15 +18,6 @@ services:
       MASTER: spark://spark-master:7077
       SPARK_CONF_DIR: /conf
       SPARK_PUBLIC_DNS: 127.0.0.1
-    expose:
-      - "7001"
-      - "7002"
-      - "7003"
-      - "7004"
-      - "7005"
-      - "7006"
-      - "7077"
-      - "6066"
     ports:
       - "4040:4040"
       - "6066:6066"
@@ -59,13 +50,6 @@ services:
       SPARK_WORKER_WEBUI_PORT: 8081
     links:
       - spark-master
-    expose:
-      - "7012"
-      - "7013"
-      - "7014"
-      - "7015"
-      - "7016"
-      - "8881"
     volumes:
       - ./conf/spark-worker-1:/conf
       - ./data:/data
