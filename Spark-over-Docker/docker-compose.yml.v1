@@ -1,5 +1,5 @@
 spark-master:
-    image: spark-2:2.4.3
+    image: spark-2:2.4.4
     command: bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
     hostname: spark-master
     environment:
@@ -30,7 +30,7 @@ spark-master:
       - ./data:/data  
 
 spark-worker-1:
-    image: spark-2:2.4.3
+    image: spark-2:2.4.4
     command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     hostname: spark-worker-1
     environment:
