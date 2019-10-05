@@ -57,5 +57,5 @@ kubectl run --generator=run-pod/v1 zeppelin --image=apache/zeppelin:0.8.0 --env=
 kubectl expose pod zeppelin --port=8082 --target-port=8080 --type=LoadBalancer --name=zeppelin -n spark
 
 # Jupyter notebook pod
-kubectl run --generator=run-pod/v1 jupyter --image=earroyoh/spark-2:2.4.3 -n spark -- pyspark --master local[2]
+kubectl run --generator=run-pod/v1 jupyter --image=earroyoh/spark-2:2.4.4 -n spark -- pyspark --master local[2]
 kubectl expose pod jupyter --port=8888 --target-port=8888 --type=LoadBalancer --name=jupyter -n spark
