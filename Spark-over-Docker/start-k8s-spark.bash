@@ -14,7 +14,7 @@ GIT_SPARK=Spark/Spark-over-Docker
 sudo ln -s $PWD/conf /mnt/conf
 sudo ln -s $PWD/data /mnt/data
 
-export KUBECONFIG=$HOME/.kube/admin.conf
+export KUBECONFIG=$HOME/.kube/config
 kubectl create namespace spark
 kubectl apply -f mysql-pod.yaml -n spark
 kubectl expose pod mysql --port=3306 --type=LoadBalancer --name=mysql -n spark
@@ -50,6 +50,12 @@ kubectl expose deployment spark-worker-1 --port=8881 --type=ClusterIP --name=spa
 
 kubectl get all -o wide -n spark
 #kubectl exec spark-worker-1 -n spark -it "echo $SPARK_MASTER_IP spark-master \>\> /etc/hosts"
+
+# Zeppelin pod
 kubectl run --generator=run-pod/v1 zeppelin --image=apache/zeppelin:0.8.0 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-2.4.3-bin-hadoop2.7" -n spark
 #kubectl expose deployment zeppelin --port=8081 --target-port=8080 --external-ip=<IP> --name=zeppelin -n spark
 kubectl expose pod zeppelin --port=8082 --target-port=8080 --type=LoadBalancer --name=zeppelin -n spark
+
+# Jupyter notebook pod
+kubectl run --generator=run-pod/v1 jupyter --image=earroyoh/spark-2:2.4.3 -n spark -- pyspark --master local[2]
+kubectl expose pod jupyter --port=8888 --target-port=8888 --type=LoadBalancer --name=jupyter -n spark

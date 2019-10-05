@@ -9,7 +9,7 @@ metadata:
     io.kompose.service: spark-worker-1
   name: spark-worker-1
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: Recreate
   template:
@@ -31,12 +31,12 @@ spec:
         - name: SPARK_WORKER_CORES
           value: "1"
         - name: SPARK_WORKER_MEMORY
-          value: 1g
+          value: 2g
         - name: SPARK_WORKER_PORT
           value: "8881"
         - name: SPARK_WORKER_WEBUI_PORT
           value: "8081"
-        image: spark-2:2.4.3
+        image: spark-2:2.4.4
         name: spark-worker-1
         ports:
         - containerPort: 8081

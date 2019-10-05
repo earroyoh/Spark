@@ -31,7 +31,7 @@ spec:
           value: /conf
         - name: SPARK_PUBLIC_DNS
           value: 127.0.0.1
-        image: spark-2:2.4.3
+        image: spark-2:2.4.4
         name: spark-master
         ports:
         - containerPort: 4040
