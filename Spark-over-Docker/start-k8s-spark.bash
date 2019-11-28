@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#IFACE=enp0s3
+IFACE=wlan0
 GIT_SPARK=Spark/Spark-over-Docker
 
 #curl -L https://github.com/kubernetes/kompose/releases/download/v1.18.0/kompose-linux-amd64 -o kompose
@@ -18,10 +18,10 @@ export KUBECONFIG=$HOME/.kube/config
 kubectl create namespace spark
 kubectl apply -f mysql-pod.yaml -n spark
 kubectl expose pod mysql --port=3306 --type=LoadBalancer --name=mysql -n spark
-kubectl apply -f spark-master-pv-conf.yaml
-kubectl apply -f spark-master-pv-data.yaml
-kubectl apply -f spark-worker-1-pv-conf.yaml
-kubectl apply -f spark-worker-1-pv-data.yaml
+kubectl apply -f spark-master-pv-conf.yaml -n spark
+kubectl apply -f spark-master-pv-data.yaml -n spark
+kubectl apply -f spark-worker-1-pv-conf.yaml -n spark
+kubectl apply -f spark-worker-1-pv-data.yaml -n spark
 kubectl apply -f spark-master-claim0-persistentvolumeclaim.yaml -n spark
 kubectl apply -f spark-master-claim1-persistentvolumeclaim.yaml -n spark
 kubectl apply -f spark-worker-1-claim0-persistentvolumeclaim.yaml -n spark
@@ -57,5 +57,5 @@ kubectl run --generator=run-pod/v1 zeppelin --image=apache/zeppelin:0.8.0 --env=
 kubectl expose pod zeppelin --port=8082 --target-port=8080 --type=LoadBalancer --name=zeppelin -n spark
 
 # Jupyter notebook pod
-kubectl run --generator=run-pod/v1 jupyter --image=earroyoh/spark-2:2.4.4 -n spark -- pyspark --master local[2]
+kubectl run --generator=run-pod/v1 jupyter --image=spark-2:2.4.4 -n spark -- pyspark --master local[2]
 kubectl expose pod jupyter --port=8888 --target-port=8888 --type=LoadBalancer --name=jupyter -n spark
