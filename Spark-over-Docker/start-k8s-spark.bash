@@ -11,6 +11,9 @@ GIT_SPARK=Spark/Spark-over-Docker
 #Run the first time to generate iniital yaml files
 #kompose convert -f docker-compose.yml
 
+#CoreDNS to accept connections
+#iptables -w -P FORWARD ACCEPT
+
 # Absolute paths for PVCs
 sudo ln -s $PWD/conf /mnt/conf
 sudo ln -s $PWD/data /mnt/data
