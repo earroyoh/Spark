@@ -7,7 +7,7 @@ metadata:
   creationTimestamp: null
   labels:
     app: spark
-  name: spark-master
+  name: spark-jupyter
 spec:
   replicas: 1
   selector:
@@ -23,10 +23,9 @@ spec:
     spec:
       containers:
       - args:
-        - bin/spark-class
-        - org.apache.spark.deploy.master.Master
-        - -h
-        - spark-master
+        - bin/pyspark
+        - --master
+        - spark://spark-master:7077
         env:
         - name: MASTER
           value: spark://spark-master:7077
@@ -35,22 +34,16 @@ spec:
         - name: SPARK_PUBLIC_DNS
           value: 127.0.0.1
         image: spark-2:2.4.4
-        name: spark-master
+        name: spark-jupyter
         ports:
-        - containerPort: 4040
-        - containerPort: 6066
-        - containerPort: 7077
-        - containerPort: 8080
-#        - containerPort: 8888
-        - containerPort: 18080
-        - containerPort: 20888
+        - containerPort: 8888
         resources: {}
         volumeMounts:
         - mountPath: /conf
           name: spark-master-claim0
         - mountPath: data
           name: spark-master-claim1
-      hostname: spark-master
+      hostname: spark-jupyter
       restartPolicy: Always
       volumes:
       - name: spark-master-claim0
