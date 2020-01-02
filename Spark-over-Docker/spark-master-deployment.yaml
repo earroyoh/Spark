@@ -48,7 +48,7 @@ spec:
         volumeMounts:
         - mountPath: /conf
           name: spark-master-claim0
-        - mountPath: data
+        - mountPath: /data
           name: spark-master-claim1
       hostname: spark-master
       restartPolicy: Always

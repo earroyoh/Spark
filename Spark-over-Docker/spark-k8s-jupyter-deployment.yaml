@@ -25,37 +25,29 @@ spec:
       - args:
         - bin/pyspark
         - --master
-        - spark://spark-master:7077
+        - k8s://10.96.0.1:443
+        - --conf
+        - spark.kubernetes.authenticate.driver.serviceAccountName=spark
+        - --conf
+        - spark.kubernetes.container.image=spark-2:2.4.4
+        - --conf
+        - spark.executor.instances=1 
+        - --conf
+        - spark.kubernetes.submission.waitAppCompletion=true
+        - --conf
+        - spark.kubernetes.namespace=spark
+        - --conf
+        - spark.dynamicAllocation.enabled=true
         env:
-        - name: MASTER
-          value: spark://spark-master:7077
-        - name: SPARK_CONF_DIR
-          value: /conf
         - name: SPARK_PUBLIC_DNS
           value: 127.0.0.1
-        - name: XLA_FLAGS
-          value: --xla_hlo_profile
-        - name: TF_XLA_FLAGS
-          value: --tf_xla_cpu_global_jit 
         image: spark-2:2.4.4
         name: spark-jupyter
         ports:
         - containerPort: 8888
         resources: {}
-        volumeMounts:
-        - mountPath: /conf
-          name: spark-master-claim0
-        - mountPath: /data
-          name: spark-master-claim1
       hostname: spark-jupyter
       restartPolicy: Always
-      volumes:
-      - name: spark-master-claim0
-        persistentVolumeClaim:
-          claimName: spark-master-claim0
-      - name: spark-master-claim1
-        persistentVolumeClaim:
-          claimName: spark-master-claim1
       tolerations:
       - effect: NoExecute
         key: "node.kubernetes.io"
