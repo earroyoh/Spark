@@ -13,8 +13,8 @@ root@<container id>:/usr/local/spark-3.0.1-bin-hadoop2.7# bin/run-example mllib.
 root@<container id>:/usr/local/spark-3.0.1-bin-hadoop2.7# bin/run-example mllib.JavaGradientBoostingRegressionExample
 
 # K8s & skaffold
-Spark-over-Docker/start-k8s-spark.sh
-skaffold init && skaffold run
+./start-k8s-spark.bash
+../skaffold init && ../skaffold run
 
 $ curl -X POST http://spark-master:6066/v1/submissions/create --header "Content-Type:application/json;charset=UTF-8" --data '{
   "action" : "CreateSubmissionRequest",
