@@ -1,10 +1,24 @@
-apiVersion: skaffold/v1beta11
+apiVersion: skaffold/v2beta7
 kind: Config
+metadata:
+  name: spark
 build:
   artifacts:
-    - image: spark-3.0.1
+  - image: spark-3.0.1
     context: Spark-over-Docker
 deploy:
   kubectl:
     manifests:
-    - Spark-over-Docker/*.yaml
+    - Spark-over-Docker/mysql-pod.yaml
+    - Spark-over-Docker/spark-master-pv-conf.yaml
+    - Spark-over-Docker/spark-master-pv-data.yaml
+    - Spark-over-Docker/spark-worker-1-pv-conf.yaml
+    - Spark-over-Docker/spark-worker-1-pv-data.yaml
+    - Spark-over-Docker/spark-master-claim0-persistentvolumeclaim.yaml
+    - Spark-over-Docker/spark-master-claim1-persistentvolumeclaim.yaml
+    - Spark-over-Docker/spark-worker-1-claim0-persistentvolumeclaim.yaml
+    - Spark-over-Docker/spark-worker-1-claim1-persistentvolumeclaim.yaml
+    - Spark-over-Docker/spark-master-deployment.yaml
+    - Spark-over-Docker/spark-worker-1-deployment.yaml
+    - Spark-over-Docker/spark-master-service.yaml
+    - Spark-over-Docker/spark-worker-1-service.yaml
