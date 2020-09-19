@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
@@ -6,9 +6,12 @@ metadata:
     kompose.version: 1.18.0 (06a2e56)
   creationTimestamp: null
   labels:
-    io.kompose.service: spark-worker-1
+    app: spark-worker-1
   name: spark-worker-1
 spec:
+  selector:
+    matchLabels:
+      app: spark-worker-1
   replicas: 1
   strategy:
     type: Recreate
@@ -16,7 +19,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: spark-worker-1
+        app: spark-worker-1
     spec:
       containers:
       - args:
@@ -36,7 +39,7 @@ spec:
           value: "8881"
         - name: SPARK_WORKER_WEBUI_PORT
           value: "8081"
-        image: spark-2:2.4.4
+        image: spark-3:3.0.1
         name: spark-worker-1
         ports:
         - containerPort: 8081

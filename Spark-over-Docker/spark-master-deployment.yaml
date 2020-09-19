@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
@@ -6,9 +6,12 @@ metadata:
     kompose.version: 1.18.0 (06a2e56)
   creationTimestamp: null
   labels:
-    io.kompose.service: spark-master
+    app: spark-master
   name: spark-master
 spec:
+  selector:
+    matchLabels:
+      app: spark-master
   replicas: 1
   strategy:
     type: Recreate
@@ -16,7 +19,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: spark-master
+        app: spark-master
     spec:
       containers:
       - args:
@@ -31,7 +34,7 @@ spec:
           value: /conf
         - name: SPARK_PUBLIC_DNS
           value: 127.0.0.1
-        image: spark-2:2.4.4
+        image: spark-3:3.0.1
         name: spark-master
         ports:
         - containerPort: 4040
