@@ -6,9 +6,16 @@ metadata:
     kompose.version: 1.18.0 (06a2e56)
   creationTimestamp: null
   labels:
+<<<<<<< HEAD
     app: spark
+=======
+    app: spark-master
+>>>>>>> spark-3.0.1
   name: spark-master
 spec:
+  selector:
+    matchLabels:
+      app: spark-master
   replicas: 1
   selector:
     matchLabels:
@@ -19,7 +26,11 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
+<<<<<<< HEAD
         app: spark
+=======
+        app: spark-master
+>>>>>>> spark-3.0.1
     spec:
       containers:
       - args:
@@ -34,7 +45,7 @@ spec:
           value: /conf
         - name: SPARK_PUBLIC_DNS
           value: 127.0.0.1
-        image: spark-2:2.4.4
+        image: spark-3.0.1
         name: spark-master
         ports:
         - containerPort: 4040

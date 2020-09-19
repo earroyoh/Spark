@@ -5,7 +5,7 @@ metadata:
   labels:
     io.kompose.service: mysql
   name: mysql
-  namespace: spark
+  namespace: default
 spec:
   containers:
   - args:
