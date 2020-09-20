@@ -35,7 +35,7 @@ RUN python3 -m pip install jupyter matplotlib seaborn xgboost scikit-learn
 #RUN apt-get -y install r-base
 
 # MySQL and PostgreSQL drivers
-RUN curl -L0 https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.12/mysql-connector-java-8.0.12.jar > ${SPARK_HOME}/jars/mysql-connector-java-8.0.12.jar
+RUN curl -L0 https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.21/mysql-connector-java-8.0.21.jar > ${SPARK_HOME}/jars/mysql-connector-java-8.0.21.jar
 RUN curl -L0 https://repo1.maven.org/maven2/postgresql/postgresql/9.1-901.jdbc4/postgresql-9.1-901.jdbc4.jar > ${SPARK_HOME}/jars/postgresql-9.1-901.jdbc4.jar
 
 ENV PYSPARK_DRIVER_PYTHON=jupyter
