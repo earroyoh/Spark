@@ -40,4 +40,4 @@ RUN curl -L0 https://repo1.maven.org/maven2/postgresql/postgresql/9.1-901.jdbc4/
 
 ENV PYSPARK_DRIVER_PYTHON=jupyter
 ENV PYSPARK_DRIVER_PYTHON_OPTS="notebook --allow-root --ip=0.0.0.0"
-EXPOSE 7077 8080 4040 6066 18080 8888
+EXPOSE 8080 4040 6066 18080 8888

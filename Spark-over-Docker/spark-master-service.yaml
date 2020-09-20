@@ -6,7 +6,7 @@ metadata:
     kompose.version: 1.18.0 (06a2e56)
   creationTimestamp: null
   labels:
-    io.kompose.service: spark-master
+    app: spark-master
   name: spark-master
 spec:
   ports:
