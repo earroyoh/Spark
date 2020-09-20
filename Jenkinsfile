@@ -1,7 +1,7 @@
     
 node {
     def project = 'earroyoh'
-    def appName = 'spark-2'
+    def appName = 'spark-3'
     def imageTag = "${appName}:${env.BUILD_NUMBER}"
 //    def imageTag = "docker.io/${project}/${appName}:${env.BUILD_NUMBER}"
     
