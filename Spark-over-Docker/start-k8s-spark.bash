@@ -52,7 +52,7 @@ kubectl get all -o wide -n spark
 #kubectl exec spark-worker-1 -n spark -it "echo $SPARK_MASTER_IP spark-master \>\> /etc/hosts"
 
 # Zeppelin pod
-kubectl run --generator=run-pod/v1 zeppelin --image=apache/zeppelin:0.8.0 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-3.0.1-bin-hadoop2.7" -n spark
+kubectl run --generator=run-pod/v1 zeppelin --image=apache/zeppelin:0.9.0 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-3.0.1-bin-hadoop2.7" -n spark
 #kubectl expose deployment zeppelin --port=8081 --target-port=8080 --external-ip=<IP> --name=zeppelin -n spark
 kubectl expose pod zeppelin --port=8082 --target-port=8080 --type=LoadBalancer --name=zeppelin -n spark
 
