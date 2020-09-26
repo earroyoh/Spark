@@ -35,9 +35,10 @@ while [ $SPARK_MASTER_IP == "<none>" ]
 do
         SPARK_MASTER_IP=`kubectl get pods -n spark -o wide | grep spark-master | awk '{print $6}'`
 done
-EXTERNAL_IP=`ip address show $IFACE | grep inet | awk '{print $2}'`
-#kubectl expose pod spark-master --port=7077,6066 --name=spark-master -n spark
-#kubectl expose pod spark-master \
+SPARK_MASTER_POD=`kubectl get pods -n spark | grep spark-master | awk '{print $1}'`
+EXTERNAL_IP=`ip address show $IFACE | grep "inet " | awk '{print $2}' | awk -F'/' '{print $1}'`
+kubectl expose pod/$SPARK_MASTER_POD --port=7077 --type=NodePort --name=spark-master -n spark
+#kubectl expose pod/spark-master \
 #  --port=8080,8081,4040,4041,6066,18080,8888,10000 \
 #  --external-ip=$EXTERNAL_IP \
 #  --type=LoadBalancer \
@@ -46,8 +47,8 @@ EXTERNAL_IP=`ip address show $IFACE | grep inet | awk '{print $2}'`
 #kubectl exec spark-master -n spark -it $SPARK_HOME/sbin/start-thriftserver.sh
 #kubectl apply -f spark-master-service.yaml -n spark
 #kubectl apply -f spark-worker-1-service.yaml -n spark
-kubectl expose deployment/spark-master --port=7077,8080,8081,4040,4041,6066,18080,10000 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=spark-master-ui -n spark
-kubectl expose deployment/spark-worker-1 --port=8881 --type=ClusterIP --name=spark-worker-1 -n spark
+kubectl expose deployment/spark-master --port=8080,8081,4040,4041,6066,18080,10000 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=spark-master-ui -n spark
+kubectl expose deployment/spark-worker-1 --port=8881 --type=NodePort --name=spark-worker-1 -n spark
 
 kubectl get all -o wide -n spark
 #kubectl exec spark-worker-1 -n spark -it "echo $SPARK_MASTER_IP spark-master \>\> /etc/hosts"
@@ -57,5 +58,5 @@ kubectl get all -o wide -n spark
 #kubectl expose pod/zeppelin --port=8082 --target-port=8080 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=zeppelin -n spark
 
 # Jupyter notebook pod
-kubectl run --generator=run-pod/v1 jupyter --image=earroyoh/spark-3_0_1:fe07cbe -n spark -- pyspark --master local[2]
+kubectl run --generator=run-pod/v1 jupyter --image=earroyoh/spark-3_0_1:fe07cbe --env="master=spark://spark-master:7077" -n spark -- pyspark --master spark://spark-master:7077
 kubectl expose pod/jupyter --port=8888 --target-port=8888 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=jupyter -n spark
