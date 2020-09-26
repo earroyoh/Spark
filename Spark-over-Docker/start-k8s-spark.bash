@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#IFACE=enp0s3
+IFACE=`ip link | grep "state UP" | head -1 | awk -F':' '{print $2}' | sed 's/ //g'`
 GIT_SPARK=Spark/Spark-over-Docker
 
 #curl -L https://github.com/kubernetes/kompose/releases/download/v1.18.0/kompose-linux-amd64 -o kompose
@@ -35,27 +35,27 @@ while [ $SPARK_MASTER_IP == "<none>" ]
 do
         SPARK_MASTER_IP=`kubectl get pods -n spark -o wide | grep spark-master | awk '{print $6}'`
 done
+EXTERNAL_IP=`ip address show $IFACE | grep inet | awk '{print $2}'`
 #kubectl expose pod spark-master --port=7077,6066 --name=spark-master -n spark
 #kubectl expose pod spark-master \
 #  --port=8080,8081,4040,4041,6066,18080,8888,10000 \
-#  --external-ip=`ifconfig -a | awk -v iface=$IFACE '/$iface/ {getline;print $2}'` \
+#  --external-ip=$EXTERNAL_IP \
 #  --type=LoadBalancer \
 #  --name=spark-master-ui \
 #  -n spark
 #kubectl exec spark-master -n spark -it $SPARK_HOME/sbin/start-thriftserver.sh
 #kubectl apply -f spark-master-service.yaml -n spark
 #kubectl apply -f spark-worker-1-service.yaml -n spark
-kubectl expose deployment spark-master --port=7077,8080,8081,4040,4041,6066,18080,10000 --type=LoadBalancer --name=spark-master -n spark
-kubectl expose deployment spark-worker-1 --port=8881 --type=ClusterIP --name=spark-worker-1 -n spark
+kubectl expose deployment/spark-master --port=7077,8080,8081,4040,4041,6066,18080,10000 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=spark-master-ui -n spark
+kubectl expose deployment/spark-worker-1 --port=8881 --type=ClusterIP --name=spark-worker-1 -n spark
 
 kubectl get all -o wide -n spark
 #kubectl exec spark-worker-1 -n spark -it "echo $SPARK_MASTER_IP spark-master \>\> /etc/hosts"
 
-# Zeppelin pod
-kubectl run --generator=run-pod/v1 zeppelin --image=apache/zeppelin:0.9.0 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-3.0.1-bin-hadoop2.7" -n spark
-#kubectl expose deployment zeppelin --port=8081 --target-port=8080 --external-ip=<IP> --name=zeppelin -n spark
-kubectl expose pod zeppelin --port=8082 --target-port=8080 --type=LoadBalancer --name=zeppelin -n spark
+# Zeppelin pod (image too big)
+#kubectl run --generator=run-pod/v1 zeppelin --image=apache/zeppelin:0.9.0 --env="master=spark://spark-master:7077" --env="SPARK_HOME=/usr/local/spark-3.0.1-bin-hadoop2.7" -n spark
+#kubectl expose pod/zeppelin --port=8082 --target-port=8080 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=zeppelin -n spark
 
 # Jupyter notebook pod
-kubectl run --generator=run-pod/v1 jupyter --image=spark-3.0.1 -n spark -- pyspark --master local[2]
-kubectl expose pod jupyter --port=8888 --target-port=8888 --type=LoadBalancer --name=jupyter -n spark
+kubectl run --generator=run-pod/v1 jupyter --image=earroyoh/spark-3_0_1:fe07cbe -n spark -- pyspark --master local[2]
+kubectl expose pod/jupyter --port=8888 --target-port=8888 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=jupyter -n spark
