@@ -58,5 +58,5 @@ kubectl get all -o wide -n spark
 #kubectl expose pod/zeppelin --port=8082 --target-port=8080 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=zeppelin -n spark
 
 # Jupyter notebook pod
-kubectl run --generator=run-pod/v1 jupyter --image=earroyoh/spark-3_0_1:fe07cbe --env="master=spark://spark-master:7077" -n spark -- pyspark --master spark://spark-master:7077
+kubectl run --generator=run-pod/v1 jupyter --image=earroyoh/spark-3_0_1:fe07cbe -n spark -- pyspark --master spark://spark-master:7077
 kubectl expose pod/jupyter --port=8888 --target-port=8888 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=jupyter -n spark
