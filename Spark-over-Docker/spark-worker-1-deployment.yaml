@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       app: spark-worker-1
-  replicas: 1
+  replicas: 3
   strategy:
     type: Recreate
   template:
@@ -34,7 +34,7 @@ spec:
         - name: SPARK_WORKER_CORES
           value: "1"
         - name: SPARK_WORKER_MEMORY
-          value: 2g
+          value: 3g
         - name: SPARK_WORKER_PORT
           value: "8881"
         - name: SPARK_WORKER_WEBUI_PORT
