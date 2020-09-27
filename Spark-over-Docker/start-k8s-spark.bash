@@ -48,7 +48,7 @@ kubectl expose pod/$SPARK_MASTER_POD --port=7077 --type=NodePort --name=spark-ma
 #kubectl apply -f spark-master-service.yaml -n spark
 #kubectl apply -f spark-worker-1-service.yaml -n spark
 kubectl expose deployment/spark-master --port=8080,8081,4040,4041,6066,18080,10000 --type=LoadBalancer --external-ip=$EXTERNAL_IP --name=spark-master-ui -n spark
-kubectl expose deployment/spark-worker-1 --port=8881 --type=NodePort --name=spark-worker-1 -n spark
+#kubectl expose deployment/spark-worker-1 --port=8881 --type=NodePort --name=spark-worker-1 -n spark
 
 kubectl get all -o wide -n spark
 #kubectl exec spark-worker-1 -n spark -it "echo $SPARK_MASTER_IP spark-master \>\> /etc/hosts"

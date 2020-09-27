@@ -20,7 +20,7 @@ $ curl -X POST http://spark-master:6066/v1/submissions/create --header "Content-
   "action" : "CreateSubmissionRequest",
   "appArgs" : [ "/usr/local/spark-3.0.1-bin-hadoop2.7/data/mllib/kmeans_data.txt" ],
   "appResource" : "file:/usr/local/spark-3.0.1-bin-hadoop2.7/examples/jars/spark-examples_2.11-3.0.1.jar",
-  "clientSparkVersion" : "2.4.4",
+  "clientSparkVersion" : "3.0.1",
   "environmentVariables" : {
     "SPARK_ENV_LOADED" : "1"
   },
